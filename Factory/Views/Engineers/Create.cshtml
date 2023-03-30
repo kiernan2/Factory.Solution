@@ -7,8 +7,8 @@
 <h4>Add a new engineer</h4>
 @using (Html.BeginForm())
 {
-  @Html.LabelFor(model => model.Name)
-  @Html.TextBoxFor(model => model.Name)
+  @Html.LabelFor(model => model.EngineerName)
+  @Html.TextBoxFor(model => model.EngineerName)
   <input type="submit" value="Add new engineer" />
 }
 <p>@Html.ActionLink("Show all Engineers", "Index")</p>

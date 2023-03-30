@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Factory.Models;
+@model Factory.Models.Engineer;
+
+<h2>Add the machine to the following Engineer</h2>
+
+<h3>@Html.DisplayFor(model => model.EngineerName)</h3>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.EngineerId)
+
+  @Html.LabelFor(model => model.EngineerId)
+  @Html.DropDownList("Id")
+}

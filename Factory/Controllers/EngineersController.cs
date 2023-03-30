@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace Factory.Controllers
       Engineer thisEngineer = _db.Engineers
         .Include(engineer => engineer.Machines)
           .ThenInclude(join => join.Machine)
-        .FirstOrDefault(engineer => engineer.Id == id);
+        .FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
@@ -46,7 +45,7 @@ namespace Factory.Controllers
 
     public ActionResult Edit(int id)
     {
-      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.Id == id);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
@@ -60,17 +59,26 @@ namespace Factory.Controllers
 
     public ActionResult Delete(int id)
     {
-      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.Id == id);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       return View(thisEngineer);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.Id == id);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
       _db.Engineers.Remove(thisEngineer);
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+    public ActionResult Assign_Machine(int engineerId, int machineId)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == engineerId);
+      Machine thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == machineId);
+      EngineerMachine var = new EngineerMachine() {EngineerId = engineerId, MachineId = machineId};
+      _db.EngineerMachines.Add(var);
+      return View(thisEngineer);
     }
   }
 }

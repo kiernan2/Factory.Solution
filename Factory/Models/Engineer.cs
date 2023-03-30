@@ -4,8 +4,8 @@ namespace Factory.Models
 {
   public class Engineer
   {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public int EngineerId { get; set; }
+    public string EngineerName { get; set; }
     public virtual ICollection<EngineerMachine> Machines { get; set; }
 
     public Engineer()

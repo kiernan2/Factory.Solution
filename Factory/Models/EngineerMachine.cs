@@ -8,5 +8,6 @@ namespace Factory.Models
 
     public virtual Engineer Engineer { get; set; }
     public virtual Machine Machine { get; set; }
+
   }
 }

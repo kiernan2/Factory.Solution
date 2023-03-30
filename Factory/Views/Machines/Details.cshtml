@@ -6,7 +6,7 @@
 
 <h2>Machine Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
+<h3>@Html.DisplayNameFor(model => model.MachineName): @Html.DisplayFor(model => model.MachineName)</h3>
 
 @if(@Model.Engineers.Count == 0)
 {
@@ -18,13 +18,13 @@ else
   <ul>
     @foreach(var join in Model.Engineers)
     {
-      <li>@join.Engineer.Name</li>
+      <li>@join.Engineer.EngineerName</li>
     }
   </ul>
 }
 
-<p>@Html.ActionLink("Edit Machine", "Edit", new { id = Model.Id})</p>
-<p>@Html.ActionLink("Delete Machine", "Delete", new { id = Model.Id})</p>
+<p>@Html.ActionLink("Edit Machine", "Edit", new { id = Model.MachineId})</p>
+<p>@Html.ActionLink("Delete Machine", "Delete", new { id = Model.MachineId})</p>
 <p>@Html.ActionLink("Back to Machines", "Index")</p>
 
 <p>@Html.ActionLink("Home", "Index", "Home")</p>

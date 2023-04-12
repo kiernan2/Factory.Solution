@@ -72,5 +72,27 @@ namespace Factory.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult Assign_Engineer(int id)
+    {
+      Machine thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == id);
+      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "EngineerName");
+      return View(thisMachine);
+    }
+
+    [HttpPost]
+    public ActionResult Assign_Engineer(Machine machine, int engineerId)
+    {
+      bool duplicate = _db.EngineerMachines.Any(join =>
+        join.EngineerId == engineerId && join.MachineId == machine.MachineId);
+
+        if (engineerId != 0 && !duplicate)
+        {
+          _db.EngineerMachines.Add(new EngineerMachine() {EngineerId = engineerId, MachineId = machine.MachineId });
+        }
+      
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }

@@ -2,6 +2,7 @@
   Layout = "_Layout";
 }
 
+@using Factory.Models;
 @model Factory.Models.Engineer;
 
 <h2>Engineer Details</h2>
@@ -16,7 +17,7 @@ else
 {
   <h4>Machines this engineer is assigned to</h4>
   <ul>
-    @foreach(var join in Model.Machines)
+    @foreach(EngineerMachine join in Model.Machines)
     {
       <li>@join.Machine.MachineName</li>
     }

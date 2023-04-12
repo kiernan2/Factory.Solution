@@ -2,6 +2,7 @@
   Layout = "_Layout";
 }
 
+@using Factory.Models;
 @model Factory.Models.Machine;
 
 <h2>Machine Details</h2>
@@ -23,6 +24,7 @@ else
   </ul>
 }
 
+<p>@Html.ActionLink("Assign Engineer", "Assign_Engineer", new { id = Model.MachineId })</p>
 <p>@Html.ActionLink("Edit Machine", "Edit", new { id = Model.MachineId})</p>
 <p>@Html.ActionLink("Delete Machine", "Delete", new { id = Model.MachineId})</p>
 <p>@Html.ActionLink("Back to Machines", "Index")</p>

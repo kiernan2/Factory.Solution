@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using Factory.Models;
 
 namespace Factory.Controllers
@@ -46,6 +48,7 @@ namespace Factory.Controllers
     public ActionResult Edit(int id)
     {
       Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "MachineName");
       return View(thisEngineer);
     }
 
@@ -72,13 +75,35 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult Assign_Machine(int engineerId, int machineId)
+    public ActionResult Assign_Machine(int id)
     {
-      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == engineerId);
-      Machine thisMachine = _db.Machines.FirstOrDefault(machine => machine.MachineId == machineId);
-      EngineerMachine var = new EngineerMachine() {EngineerId = engineerId, MachineId = machineId};
-      _db.EngineerMachines.Add(var);
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "MachineName");
       return View(thisEngineer);
+    }
+
+    [HttpPost]
+    public ActionResult Assign_Machine(Engineer engineer, int machineId)
+    {
+      bool duplicate = _db.EngineerMachines.Any(join =>
+        join.MachineId == machineId && join.EngineerId == engineer.EngineerId);
+
+        if (machineId != 0 && !duplicate && engineer.EngineerId != 0)
+        {
+          Console.WriteLine("Assign Machine Pass");
+          _db.EngineerMachines.Add(new EngineerMachine() { MachineId = machineId, EngineerId = engineer.EngineerId });
+        }
+
+        else 
+        {
+          Console.WriteLine("Assign Machine Fail");
+          Console.WriteLine(duplicate);
+          Console.WriteLine(machineId);
+          Console.WriteLine(engineer.EngineerId);
+        }
+
+        _db.SaveChanges();
+        return RedirectToAction("Index");
     }
   }
 }

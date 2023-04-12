@@ -13,6 +13,10 @@
 {
   @Html.HiddenFor(model => model.EngineerId)
 
-  @Html.LabelFor(model => model.EngineerId)
-  @Html.DropDownList("Id")
+  @Html.Label("Select Machine")
+  @Html.DropDownList("MachineId")
+
+  <input type="submit" value="Save" />
 }
+
+<p>@Html.ActionLink("Back", "Index")</p>

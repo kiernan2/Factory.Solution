@@ -90,16 +90,7 @@ namespace Factory.Controllers
 
         if (machineId != 0 && !duplicate && engineer.EngineerId != 0)
         {
-          Console.WriteLine("Assign Machine Pass");
           _db.EngineerMachines.Add(new EngineerMachine() { MachineId = machineId, EngineerId = engineer.EngineerId });
-        }
-
-        else 
-        {
-          Console.WriteLine("Assign Machine Fail");
-          Console.WriteLine(duplicate);
-          Console.WriteLine(machineId);
-          Console.WriteLine(engineer.EngineerId);
         }
 
         _db.SaveChanges();
